@@ -1,0 +1,23 @@
+
+<%= form_for [:admin, publication_announcement] do |form| %>
+  <%= form.errors %>
+
+  <%= form.text_field :title, required: true %>
+  <%= form.text_area :summary, rows: 5, required: true %>
+
+  <%= form.label :organisation_id, 'Owning organisation' %>
+  <%= form.select :organisation_id,
+                  options_from_collection_for_select(Organisation.with_translations, 'id', 'name', publication_announcement.organisation_id),
+                  class: 'chzn-select' %>
+
+  <%= form.label :release_date, "Expected release date", required: true %>
+  <%= form.datetime_select :release_date, {
+        start_year: Date.today.year,
+        end_year: Date.today.year + 5,
+        minute_step: 15,
+        default: (Date.tomorrow + 9.5.hours)
+      }, { class: 'date' } %>
+  <%= form.text_field :provisional_release_date, label_text: "Provisional release date override, e.g. Jan/Feb #{Date.today.year+1}" %>
+
+  <%= form.save_or_cancel buttons: { save: 'Save announcement' }, cancel: admin_root_path %>
+<% end %>

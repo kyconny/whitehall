@@ -272,6 +272,8 @@ Whitehall::Application.routes.draw do
 
         get "/editions/:id" => "editions#show"
 
+        resources :publication_announcements
+
         resources :suggestions, only: [:index]
 
         resources :publications, except: [:index]
