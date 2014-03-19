@@ -140,7 +140,7 @@ Whitehall::Application.routes.draw do
     get 'world/organisations/:organisation_id/office' =>redirect('/world/organisations/%{organisation_id}')
     get 'world/organisations/:organisation_id/about' => redirect('/world/organisations/%{organisation_id}')
 
-    resources :statistical_release_announcements
+    resources :statistics_announcements
 
     constraints(AdminRequest) do
       namespace :admin do
@@ -274,7 +274,7 @@ Whitehall::Application.routes.draw do
 
         get "/editions/:id" => "editions#show"
 
-        resources :statistical_release_announcements
+        resources :statistics_announcements
 
         resources :suggestions, only: [:index]
 
