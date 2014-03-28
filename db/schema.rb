@@ -1031,8 +1031,10 @@ ActiveRecord::Schema.define(:version => 20140401132650) do
     t.string   "change_note"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.integer  "creator_id"
   end
 
+  add_index "statistics_announcement_dates", ["creator_id"], :name => "index_statistics_announcement_dates_on_creator_id"
   add_index "statistics_announcement_dates", ["statistics_announcement_id", "created_at"], :name => "statistics_announcement_release_date"
 
   create_table "statistics_announcements", :force => true do |t|
