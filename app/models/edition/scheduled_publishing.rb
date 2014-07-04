@@ -102,7 +102,7 @@ module Edition::ScheduledPublishing
   end
 
   def queue_scheduled_publishing
-    user_id = User.last.id
+    user_id = User.where(name: "Scheduled Publishing Robot").first.id
     ScheduledPublishingWorker.perform_at(self.scheduled_publication, self.id.to_s, user_id)
   end
 
