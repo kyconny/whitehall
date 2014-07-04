@@ -37,11 +37,13 @@ gem 'jbuilder'
 gem 'rack_strip_client_ip', '0.0.1'
 gem 'invalid_utf8_rejector', '~> 0.0.1'
 gem 'sidekiq', '2.17.7'
+gem 'sidekiq-statsd'
 gem 'raindrops', '0.11.0'
 gem 'airbrake', '3.1.15'
 gem 'bad_link_finder', '0.3.3'
 gem 'pdf-reader', '1.3.3'
 gem 'typhoeus', '0.6.8'
+gem 'redis'
 
 # This sanitize fork branch fizes an issue with sanitize seeing colons in ids (when used as anchor tag references in an href)
 # as links with protocols. This has been fixed and merged in rgrove's Sanitize, but will only be released with version 2.1.

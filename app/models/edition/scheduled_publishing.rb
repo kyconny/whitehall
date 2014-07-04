@@ -50,7 +50,8 @@ module Edition::ScheduledPublishing
       errors.add(:base, reason)
       false
     else
-      schedule!
+      queue
+      schedule! # change workflow state
     end
   end
 
@@ -60,7 +61,8 @@ module Edition::ScheduledPublishing
       false
     else
       self.force_published = true
-      force_schedule!
+      queue_scheduled_publishing
+      force_schedule! # change workflow state
     end
   end
 
@@ -74,6 +76,7 @@ module Edition::ScheduledPublishing
       false
     else
       self.force_published = false
+      dequeue_scheduled_publishing
       unschedule!
     end
   end
@@ -96,5 +99,14 @@ module Edition::ScheduledPublishing
 
   def scheduled_publication_must_be_in_the_future?
     (draft? && state_was == 'draft') || submitted? || (state_was == 'rejected' && rejected?)
+  end
+
+  def queue_scheduled_publishing
+    user_id = User.last.id
+    ScheduledPublishingWorker.perform_at(self.scheduled_publication, self.id.to_s, user_id)
+  end
+
+  def dequeue_scheduled_publishing
+    ScheduledPublishingWorker.cancel_scheduled_publishing(self.id.to_s)
   end
 end
